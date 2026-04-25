@@ -1,0 +1,70 @@
+<!--
+  Objetivo del ejercicio:
+  Practicar servicios HTTP, Observables, pipe(), map(), tap(), JSON y mappers.
+
+  Que debe implementar el estudiante:
+  - Agregar un POST usando AcademicApiService.createTask().
+  - Mostrar un mensaje de carga/error.
+  - Completar una transformacion adicional en academic.mappers.ts.
+  - Corregir los textos temporales "TODO" que aparecen desde los mappers.
+
+  Pistas:
+  - El pipe async se suscribe y desuscribe automaticamente.
+  - El pipe json permite inspeccionar objetos.
+  - La API real debe estar corriendo en http://localhost:3000/api.
+
+  Resultado esperado:
+  Listas reales provenientes del backend.
+-->
+<section class="section">
+  <h1>Servicios HTTP</h1>
+
+  <article class="card">
+    <h2>JSON de ejemplo</h2>
+    <pre>{{ exampleJson | json }}</pre>
+  </article>
+
+  <h2>Categories desde API</h2>
+  @if (categories$ | async; as categories) {
+    <ul>
+      @for (category of categories; track category.id) {
+        <li>{{ category.name }} - {{ category.description }}</li>
+      }
+    </ul>
+  } @else {
+    <p>Cargando categories...</p>
+  }
+
+  <h2>Products desde API</h2>
+  @if (products$ | async; as products) {
+    <div class="grid">
+      @for (product of products; track product.id) {
+        <article class="card">
+          <h3>{{ product.name }}</h3>
+          <p>{{ product.priceLabel }}</p>
+          <p>{{ product.stockLabel }}</p>
+          <p>{{ product.categoryName }}</p>
+          <!--
+            TODO estudiante:
+            Si ves "TODO: calcular stock" o "TODO: mapear categoria",
+            el problema NO esta en este HTML.
+            Debes resolverlo en mapProductApiToView().
+          -->
+        </article>
+      }
+    </div>
+  }
+
+  <h2>Tasks desde API</h2>
+  @if (tasks$ | async; as tasks) {
+    <ul>
+      @for (task of tasks; track task.id) {
+        <li>{{ task.title }} - {{ task.statusLabel }} - {{ task.studentLabel }}</li>
+        <!--
+          TODO estudiante:
+          Agrega task.dueDateLabel cuando completes el mapper de fecha.
+        -->
+      }
+    </ul>
+  }
+</section>

@@ -1,0 +1,78 @@
+<!--
+  Objetivo del ejercicio:
+  Practicar formularios reactivos, FormGroup, FormControl, FormArray y validaciones.
+
+  Que debe implementar el estudiante:
+  - Agregar Validators.minLength(3) al titulo.
+  - Mostrar mensaje de error para description si se vuelve obligatoria.
+  - Enviar el formulario al backend con POST.
+  - Evitar enviar el formulario si alguna subtarea esta vacia.
+
+  Pistas:
+  - formGroup conecta el objeto FormGroup con el HTML.
+  - formArrayName permite renderizar controles dinamicos.
+  - No uses [(ngModel)] en formularios reactivos.
+  - Usa taskForm.invalid para decidir si se puede enviar.
+
+  Resultado esperado:
+  El formulario valida campos, permite agregar subtareas y prepara datos para POST.
+-->
+<section class="section">
+  <h1>Formularios reactivos</h1>
+
+  <form class="form" [formGroup]="taskForm" (ngSubmit)="submit()">
+    <label>
+      Titulo
+      <input type="text" formControlName="title" />
+    </label>
+
+    @if (taskForm.controls.title.touched && taskForm.controls.title.hasError('required')) {
+      <p class="error">El titulo es obligatorio.</p>
+    }
+
+    <!--
+      TODO estudiante:
+      Cuando agregues Validators.minLength(3), muestra aqui un mensaje si el titulo es muy corto.
+      Criterio de aceptacion: el mensaje debe aparecer solo si el control fue tocado.
+    -->
+
+    <label>
+      Descripcion
+      <textarea formControlName="description"></textarea>
+    </label>
+
+    <label>
+      Prioridad
+      <select formControlName="priority">
+        <option value="low">Baja</option>
+        <option value="medium">Media</option>
+        <option value="high">Alta</option>
+      </select>
+    </label>
+
+    <div formArrayName="subtasks">
+      <h2>Subtareas</h2>
+
+      @for (subtask of subtasks.controls; track $index; let index = $index) {
+        <div class="inline-field">
+          <input type="text" [formControlName]="index" />
+          <button type="button" (click)="removeSubtask(index)">Quitar</button>
+        </div>
+        <!--
+          TODO estudiante:
+          Mostrar un mensaje de error si esta subtarea esta vacia y ya fue tocada.
+          Pista: subtask.touched && subtask.hasError('required')
+        -->
+      }
+    </div>
+
+    <button type="button" (click)="addSubtask()">Agregar subtarea</button>
+    <button type="button" (click)="saveDraft()">Guardar borrador</button>
+    <button type="submit">Enviar</button>
+  </form>
+
+  <article class="card">
+    <h2>Valor actual del formulario</h2>
+    <pre>{{ taskForm.getRawValue() | json }}</pre>
+  </article>
+</section>

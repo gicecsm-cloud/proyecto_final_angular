@@ -1,0 +1,17 @@
+<!--
+  Objetivo del ejercicio:
+  Mostrar el parametro id recibido por la ruta.
+
+  Que debe implementar el estudiante:
+  - Convertir routeId a numero.
+  - Llamar al backend con ese id.
+  - Mostrar 404 visual si no existe el recurso.
+
+  Resultado esperado:
+  La URL /rutas/1 muestra id = 1.
+-->
+<article class="card">
+  <h2>Detalle de ruta</h2>
+  <p>Parametro recibido: {{ routeId() }}</p>
+  <a routerLink="/rutas">Volver</a>
+</article>

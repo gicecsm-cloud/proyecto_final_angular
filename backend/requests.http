@@ -1,0 +1,223 @@
+@baseUrl = http://localhost:3000/api
+
+### Health - 200
+GET {{baseUrl}}/health
+
+### Root API - 200
+GET http://localhost:3000
+
+### Ruta inexistente - 404
+GET {{baseUrl}}/no-existe
+
+
+### Categories - listar - 200
+GET {{baseUrl}}/categories
+
+### Categories - detalle - 200
+GET {{baseUrl}}/categories/1
+
+### Categories - no encontrada - 404
+GET {{baseUrl}}/categories/99999
+
+### Categories - crear - 201
+POST {{baseUrl}}/categories
+Content-Type: application/json
+
+{
+  "name": "Laboratorio",
+  "description": "Material adicional para practicas."
+}
+
+### Categories - payload invalido - 400
+POST {{baseUrl}}/categories
+Content-Type: application/json
+
+{
+  "name": "",
+  "description": "Falta un nombre valido."
+}
+
+
+### Products - listar - 200
+GET {{baseUrl}}/products
+
+### Products - detalle - 200
+GET {{baseUrl}}/products/1
+
+### Products - no encontrado - 404
+GET {{baseUrl}}/products/99999
+
+### Products - por categoria - 200
+GET {{baseUrl}}/products/category/1
+
+### Products - categoria no encontrada - 404
+GET {{baseUrl}}/products/category/99999
+
+### Products - crear - 201
+POST {{baseUrl}}/products
+Content-Type: application/json
+
+{
+  "name": "Teclado mecanico",
+  "price": 42.99,
+  "stock": 15,
+  "category_id": 1
+}
+
+### Products - payload invalido - 400
+POST {{baseUrl}}/products
+Content-Type: application/json
+
+{
+  "name": "Producto sin precio valido",
+  "price": -10,
+  "stock": 5,
+  "category_id": 1
+}
+
+### Products - categoria relacionada invalida - 400
+POST {{baseUrl}}/products
+Content-Type: application/json
+
+{
+  "name": "Producto sin categoria existente",
+  "price": 20,
+  "stock": 5,
+  "category_id": 99999
+}
+
+
+### Students - listar - 200
+GET {{baseUrl}}/students
+
+### Students - detalle - 200
+GET {{baseUrl}}/students/1
+
+### Students - no encontrado - 404
+GET {{baseUrl}}/students/99999
+
+### Students - crear - 201
+POST {{baseUrl}}/students
+Content-Type: application/json
+
+{
+  "first_name": "Sofia",
+  "last_name": "Castro",
+  "email": "sofia.castro@example.com",
+  "active": true
+}
+
+### Students - payload invalido - 400
+POST {{baseUrl}}/students
+Content-Type: application/json
+
+{
+  "first_name": "Sofia",
+  "last_name": "Castro",
+  "email": "correo-invalido",
+  "active": true
+}
+
+
+### Tasks - listar - 200
+GET {{baseUrl}}/tasks
+
+### Tasks - detalle - 200
+GET {{baseUrl}}/tasks/1
+
+### Tasks - no encontrada - 404
+GET {{baseUrl}}/tasks/99999
+
+### Tasks - por estado pending - 200
+GET {{baseUrl}}/tasks/status/pending
+
+### Tasks - por estado in_progress - 200
+GET {{baseUrl}}/tasks/status/in_progress
+
+### Tasks - por estado done - 200
+GET {{baseUrl}}/tasks/status/done
+
+### Tasks - estado invalido - 400
+GET {{baseUrl}}/tasks/status/cancelled
+
+### Tasks - por estudiante - 200
+GET {{baseUrl}}/tasks/student/1
+
+### Tasks - estudiante no encontrado - 404
+GET {{baseUrl}}/tasks/student/99999
+
+### Tasks - crear asignada a estudiante - 201
+POST {{baseUrl}}/tasks
+Content-Type: application/json
+
+{
+  "title": "Crear componente de dashboard",
+  "description": "Consumir tareas y mostrar resumen por estado.",
+  "status": "pending",
+  "priority": "high",
+  "student_id": 1,
+  "due_date": "2026-05-25"
+}
+
+### Tasks - crear sin estudiante - 201
+POST {{baseUrl}}/tasks
+Content-Type: application/json
+
+{
+  "title": "Revisar documentacion de endpoints",
+  "description": "Practicar consumo HTTP sin relacion obligatoria.",
+  "status": "in_progress",
+  "priority": "medium",
+  "student_id": null,
+  "due_date": null
+}
+
+### Tasks - payload invalido - 400
+POST {{baseUrl}}/tasks
+Content-Type: application/json
+
+{
+  "title": "Tarea con prioridad invalida",
+  "description": "Debe fallar por prioridad.",
+  "status": "pending",
+  "priority": "urgent",
+  "student_id": 1,
+  "due_date": "2026-05-25"
+}
+
+### Tasks - estudiante relacionado invalido - 400
+POST {{baseUrl}}/tasks
+Content-Type: application/json
+
+{
+  "title": "Tarea con estudiante inexistente",
+  "description": "Debe fallar porque student_id no existe.",
+  "status": "pending",
+  "priority": "medium",
+  "student_id": 99999,
+  "due_date": "2026-05-25"
+}
+
+### Tasks - actualizar estado - 200
+PATCH {{baseUrl}}/tasks/1/status
+Content-Type: application/json
+
+{
+  "status": "in_progress"
+}
+
+### Tasks - actualizar estado invalido - 400
+PATCH {{baseUrl}}/tasks/1/status
+Content-Type: application/json
+
+{
+  "status": "cancelled"
+}
+
+### Tasks - actualizar tarea no encontrada - 404
+PATCH {{baseUrl}}/tasks/99999/status
+Content-Type: application/json
+
+{
+  "status": "done"
+}

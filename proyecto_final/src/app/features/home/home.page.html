@@ -1,0 +1,30 @@
+<!--
+  Objetivo del ejercicio:
+  Entender que la aplicacion es una SPA y que cada opcion del navbar apunta a una practica.
+
+  Que debe implementar el estudiante:
+  Agregar una breve descripcion personal del proyecto.
+
+  Pistas:
+  - Usa interpolacion {{ }} para mostrar nuevas propiedades del componente.
+  - No uses *ngFor; usa @for.
+
+  Resultado esperado:
+  Una pantalla inicial clara para orientar al usuario.
+-->
+<section class="section">
+  <h1>Proyecto academico Angular</h1>
+  <p>
+    Esta SPA esta preparada para practicar conceptos modernos de Angular y consumir el backend
+    REST generado previamente.
+  </p>
+
+  <h2>Temas del proyecto</h2>
+  <ul>
+    @for (topic of topics; track topic) {
+      <li>{{ topic }}</li>
+    }
+  </ul>
+
+  <a class="button-link" routerLink="/servicios-http">Ir a Servicios HTTP</a>
+</section>

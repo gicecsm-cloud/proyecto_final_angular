@@ -1,0 +1,46 @@
+<!--
+  Objetivo del ejercicio:
+  Renderizar diferentes estados con @if y listas con @for.
+
+  Que debe implementar el estudiante:
+  - Completar un nuevo estado "success" o "filtered".
+  - Cambiar el track de @for si el modelo cambia.
+  - Agregar una condicion para mostrar solo tareas pendientes.
+
+  Pistas:
+  - @if reemplaza *ngIf.
+  - @for reemplaza *ngFor.
+  - track task.id evita renderizados innecesarios.
+
+  Resultado esperado:
+  El usuario puede simular carga, vacio, error y datos listos.
+-->
+<section class="section">
+  <h1>Control Flow</h1>
+
+  <div class="actions">
+    <button type="button" (click)="setState('loading')">Loading</button>
+    <button type="button" (click)="setState('empty')">Empty</button>
+    <button type="button" (click)="setState('error')">Error</button>
+    <button type="button" (click)="setState('ready')">Ready</button>
+  </div>
+
+  @if (state() === 'loading') {
+    <p>Cargando datos...</p>
+  } @else if (state() === 'empty') {
+    <p>No hay tareas para mostrar.</p>
+  } @else if (state() === 'error') {
+    <p class="error">Ocurrio un error simulado.</p>
+  } @else {
+    <div class="grid">
+      @for (task of tasks(); track task.id) {
+        <article class="card">
+          <h2>{{ task.title }}</h2>
+          <p>{{ task.summary }}</p>
+          <p>Estado: {{ task.statusLabel }}</p>
+          <p>Prioridad: {{ task.priorityLabel }}</p>
+        </article>
+      }
+    </div>
+  }
+</section>

@@ -1,0 +1,153 @@
+.sidebar {
+  background: #111827;
+  border-right: 1px solid #1f2937;
+  color: #e5e7eb;
+  display: grid;
+  grid-template-rows: auto 1fr auto;
+  height: 100vh;
+  left: 0;
+  padding: 18px 14px;
+  position: sticky;
+  top: 0;
+  width: 280px;
+}
+
+.brand {
+  align-items: center;
+  border-bottom: 1px solid #243041;
+  color: #ffffff;
+  display: flex;
+  gap: 12px;
+  padding: 6px 8px 18px;
+  text-decoration: none;
+}
+
+.brand-mark {
+  align-items: center;
+  background: #ffffff;
+  border-radius: 10px;
+  color: #111827;
+  display: inline-flex;
+  font-weight: 800;
+  height: 38px;
+  justify-content: center;
+  width: 38px;
+}
+
+.brand strong,
+.brand small {
+  display: block;
+  line-height: 1.2;
+}
+
+.brand small {
+  color: #9ca3af;
+  font-size: 12px;
+  margin-top: 2px;
+}
+
+.sidebar-section {
+  display: flex;
+  flex-direction: column;
+  gap: 6px;
+  margin-top: 18px;
+}
+
+.section-label {
+  color: #6b7280;
+  font-size: 11px;
+  font-weight: 700;
+  letter-spacing: 0.08em;
+  padding: 0 10px 8px;
+  text-transform: uppercase;
+}
+
+.nav-item {
+  align-items: center;
+  border-radius: 10px;
+  color: #d1d5db;
+  display: flex;
+  gap: 12px;
+  padding: 11px 10px;
+  text-decoration: none;
+  transition:
+    background-color 160ms ease,
+    color 160ms ease,
+    transform 160ms ease;
+}
+
+.nav-item:hover {
+  background: #1f2937;
+  color: #ffffff;
+  transform: translateX(2px);
+}
+
+.nav-item.active {
+  background: #2563eb;
+  color: #ffffff;
+  box-shadow: 0 10px 24px rgb(37 99 235 / 0.26);
+}
+
+.nav-icon {
+  align-items: center;
+  background: #243041;
+  border-radius: 8px;
+  color: #cbd5e1;
+  display: inline-flex;
+  flex: 0 0 auto;
+  font-size: 11px;
+  font-weight: 800;
+  height: 30px;
+  justify-content: center;
+  min-width: 34px;
+  padding: 0 6px;
+}
+
+.nav-item.active .nav-icon {
+  background: rgb(255 255 255 / 0.18);
+  color: #ffffff;
+}
+
+.nav-text {
+  font-size: 14px;
+  font-weight: 600;
+}
+
+.sidebar-footer {
+  border-top: 1px solid #243041;
+  display: grid;
+  gap: 4px;
+  padding: 16px 10px 4px;
+}
+
+.footer-label {
+  color: #ffffff;
+  font-size: 13px;
+  font-weight: 700;
+}
+
+.footer-note {
+  color: #9ca3af;
+  font-size: 12px;
+}
+
+@media (max-width: 860px) {
+  .sidebar {
+    height: auto;
+    position: static;
+    width: 100%;
+  }
+
+  .sidebar-section {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(150px, 1fr));
+  }
+
+  .section-label {
+    grid-column: 1 / -1;
+  }
+
+  .sidebar-footer {
+    display: none;
+  }
+}

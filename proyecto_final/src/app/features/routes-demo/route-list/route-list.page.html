@@ -1,0 +1,19 @@
+<!--
+  Objetivo del ejercicio:
+  Practicar routerLink con parametros.
+
+  Que debe implementar el estudiante:
+  Agregar un link a una nueva ruta hija cuando la cree en routes-demo.routes.ts.
+
+  Resultado esperado:
+  Clic en una practica navega a /rutas/:id.
+-->
+<p>Selecciona una practica para ver el parametro en la URL.</p>
+
+<ul>
+  @for (lesson of lessons; track lesson.id) {
+    <li>
+      <a [routerLink]="[lesson.id]">{{ lesson.title }}</a>
+    </li>
+  }
+</ul>

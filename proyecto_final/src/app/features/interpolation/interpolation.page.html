@@ -1,0 +1,44 @@
+<!--
+  Objetivo del ejercicio:
+  Usar interpolacion para mostrar valores del componente.
+
+  Que debe implementar el estudiante:
+  - Mostrar product.stock y product.category.
+  - Crear en el .ts una propiedad calculada para precio con IVA.
+  - Formatear el estado active como "Activo" o "Inactivo".
+  - Observar como signal() y computed() actualizan el HTML automaticamente.
+
+  Pistas:
+  - Usa {{ studentFullName() }} si el dato viene de computed().
+  - Usa {{ product().name }} si el dato viene de signal().
+  - Puedes usar expresiones simples dentro de {{ }}.
+
+  Resultado esperado:
+  Una tarjeta con datos legibles de estudiante y producto, y cambios reactivos simples.
+-->
+<section class="section">
+  <h1>Interpolacion</h1>
+
+  <article class="card">
+    <h2>{{ studentFullName() }}</h2>
+    <p>Email: {{ student().email }}</p>
+    <p>Estado: {{ studentStatus() }}</p>
+    <button type="button" (click)="toggleStudentStatus()">Cambiar estado</button>
+  </article>
+
+  <article class="card">
+    <h2>{{ product().name }}</h2>
+    <p>Precio base: ${{ product().price }}</p>
+    <p>Categoria: {{ product().category }}</p>
+    <p>Stock: {{ product().stock }}</p>
+    <p>Disponibilidad: {{ availabilityText() }}</p>
+    <p>Precio con IVA: ${{ priceWithTax().toFixed(2) }}</p>
+
+    <label>
+      IVA (%)
+      <input #taxInput type="number" min="0" max="100" value="12" (input)="updateTaxRate(taxInput.value)" />
+    </label>
+
+    <button type="button" (click)="addStock()">Agregar stock</button>
+  </article>
+</section>

@@ -1,0 +1,39 @@
+<!--
+  Objetivo del ejercicio:
+  Guardar y recuperar datos sencillos con localStorage.
+
+  Que debe implementar el estudiante:
+  - Completar savePendingFilter() en el archivo .ts.
+  - Mostrar el filtro recuperado en pantalla.
+
+  Pistas:
+  - Usa (input) para leer el valor del input.
+  - Usa signal para reflejar cambios en modo zoneless.
+
+  Resultado esperado:
+  El nombre se mantiene al recargar el navegador despues de guardar.
+-->
+<section class="section">
+  <h1>Local Storage</h1>
+
+  <label>
+    Nombre del estudiante
+    <input
+      type="text"
+      [value]="studentName()"
+      (input)="updateStudentName($any($event.target).value)"
+    />
+  </label>
+
+  <div class="actions">
+    <button type="button" (click)="saveName()">Guardar nombre</button>
+    <button type="button" (click)="clearName()">Limpiar</button>
+    <button type="button" (click)="savePendingFilter()">Guardar filtro pendiente</button>
+  </div>
+
+  @if (studentName()) {
+    <p>Nombre actual: {{ studentName() }}</p>
+  } @else {
+    <p>No hay nombre guardado todavia.</p>
+  }
+</section>
