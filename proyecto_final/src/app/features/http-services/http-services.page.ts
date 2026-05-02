@@ -64,24 +64,22 @@ export class HttpServicesPage {
       return;
     }
 
-    const payload: CreateStudentPayload = {
-      first_name: this.studentForm.value.first_name!,
-      last_name: this.studentForm.value.last_name!,
-      email: this.studentForm.value.email!,
-      active: this.studentForm.value.active ?? true,
-    };
-
-    this.academicApi.createStudent(payload).subscribe({
-      next: (student) => {
-        this.createdStudent = student;
-        this.studentForm.reset({ active: true });
-        alert(`Estudiante "${student.fullName}" creado correctamente!`);
-      },
-      error: (err) => {
-        console.error('Error:', err);
-        alert('Err al crear el estudiante');
-      },
-    });
-  }
+   const payload: CreateStudentPayload = {
+    first_name: this.studentForm.value.first_name!,
+    last_name: this.studentForm.value.last_name!,
+    email: this.studentForm.value.email!,
+    active: this.studentForm.value.active!,
+   };
+   this.academicApi.createStudent(payload).subscribe({
+     next: (student) => {
+       this.createdStudent = student;
+       this.studentForm.reset({ active: true });
+       alert(`Estudiante "${student.fullName}" creado correctamente!`);
+     },
+     error: (err) => {
+       console.error('Error:', err);
+       alert('Errorr al crear el estudiante');
+     },
+   });
+ }
 }
-
