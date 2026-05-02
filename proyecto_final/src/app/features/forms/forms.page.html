@@ -73,6 +73,21 @@
 
     <button type="button" (click)="addSubtask()">Agregar subtarea</button>
     <button type="button" (click)="saveDraft()">Guardar borrador</button>
+     <label>
+       Id Estudiante (opcional)
+      <input type="number" formControlName="student_id" placeholder="Ejm: 1" />
+      @if (taskForm.controls.student_id.touched && taskForm.controls.student_id.hasError('required')) {
+        <p class="error">El id del estudiante es obligatorio.</p>
+      }
+     </label>
+       <label>
+       fecha 
+      <input type="date" formControlName="due_date" />
+     @if(taskForm.controls.due_date.touched && taskForm.controls.due_date.hasError('required')) {
+        <p class="error">La fecha de entrega es obligatoria.</p>
+      }
+    </label>
+
     <button type="submit">Enviar</button>
   </form>
 

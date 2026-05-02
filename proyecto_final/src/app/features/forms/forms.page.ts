@@ -16,6 +16,8 @@ interface TaskForm {
   description: FormControl<string>;
   priority: FormControl<'low' | 'medium' | 'high'>;
   subtasks: FormArray<FormControl<string>>;
+  student_id: FormControl<number | null>;
+  due_date: FormControl<string | null>;
 }
 
 @Component({
@@ -71,6 +73,10 @@ export class FormsPage {
     subtasks: new FormArray<FormControl<string>>([
       new FormControl('', { nonNullable: true, validators: [Validators.required] }),
     ]),
+
+    student_id: new FormControl <number | null>(null, [Validators.required]),
+    due_date: new FormControl <string | null>(null,[Validators.required]),
+
   });
 
   get subtasks(): FormArray<FormControl<string>> {
@@ -122,8 +128,8 @@ export class FormsPage {
     description: value.description || null,
     priority: value.priority,
     status: 'pending',
-    student_id: null,
-    due_date: null,
+    student_id: value.student_id ?? null,
+    due_date: value.due_date ?? null,
   };
 
   this.academicApi.createTask(payload).subscribe({
