@@ -24,7 +24,7 @@ export class StudentCardComponent {
    */
   readonly student = input.required<StudentView>();
 
-  
+
   readonly selected = output<StudentView>();
 
   selectStudent(): void {

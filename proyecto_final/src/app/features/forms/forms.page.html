@@ -72,7 +72,7 @@
     </div>
 
     <button type="button" (click)="addSubtask()">Agregar subtarea</button>
-    <button type="button" (click)="saveDraft()">Guardar borrador</button>
+  
      <label>
        Id Estudiante (opcional)
       <input type="number" formControlName="student_id" placeholder="Ejm: 1" />
@@ -87,7 +87,7 @@
         <p class="error">La fecha de entrega es obligatoria.</p>
       }
     </label>
-
+    <button type="button" (click)="saveDraft()">Guardar borrador</button>
     <button type="submit">Enviar</button>
   </form>
 

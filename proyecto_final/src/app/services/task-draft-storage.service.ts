@@ -4,6 +4,9 @@ import { LocalStorageService } from '../core/storage/local-storage.service';
 export interface TaskDraft {
   title: string;
   description: string;
+  priority?: 'low' | 'medium' | 'high';
+  student_id?: number | null;
+  due_date?: string | null;
 }
 
 const TASK_DRAFT_KEY = 'academic-task-draft';
@@ -23,11 +26,17 @@ export class TaskDraftStorageService {
     return this.storage.getItem<TaskDraft>(TASK_DRAFT_KEY, {
       title: '',
       description: '',
+      priority: 'medium',
+      student_id: null,
+      due_date: null,
     });
   }
 
   saveDraft(draft: TaskDraft): void {
     this.storage.setItem(TASK_DRAFT_KEY, draft);
+  
+  
+  
   }
 
   clearDraft(): void {

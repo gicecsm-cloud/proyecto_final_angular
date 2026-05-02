@@ -151,7 +151,7 @@ export class AcademicApiService {
 
   createStudent(payload: CreateStudentPayload): Observable<StudentView> {
   return this.http.post<ApiResponse<StudentApi>>(`${API_BASE_URL}/students`, payload).pipe(
-    tap((response) => console.log('Estudiante Creaado :', response)),
+    tap((response) => console.log('Estudiante Creado :', response)),
     map((response) => mapStudentApiToView(response.data)),
   );
 }

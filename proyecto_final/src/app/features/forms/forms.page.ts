@@ -66,7 +66,7 @@ export class FormsPage {
 
 
 
-    priority: new FormControl('medium', {
+    priority: new FormControl(this.draft.priority ?? 'medium', {
       nonNullable: true,
       validators: [Validators.required],
     }),
@@ -74,8 +74,8 @@ export class FormsPage {
       new FormControl('', { nonNullable: true, validators: [Validators.required] }),
     ]),
 
-    student_id: new FormControl <number | null>(null, [Validators.required]),
-    due_date: new FormControl <string | null>(null,[Validators.required]),
+    student_id: new FormControl <number | null>(this.draft.student_id ?? null, [Validators.required]),
+    due_date: new FormControl <string | null>(this.draft.due_date ?? null),
 
   });
 
@@ -94,10 +94,15 @@ export class FormsPage {
   }
 
   saveDraft(): void {
+    console.log('Guardando borrador...');
     this.draftStorage.saveDraft({
       title: this.taskForm.controls.title.value,
       description: this.taskForm.controls.description.value,
+      priority: this.taskForm.controls.priority.value,
+      student_id: this.taskForm.controls.student_id.value,
+      due_date: this.taskForm.controls.due_date.value,
     });
+     console.log('Borrador guardado');
   }
 
   submit(): void {
