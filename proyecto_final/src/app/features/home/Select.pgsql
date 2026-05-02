@@ -1,0 +1,1 @@
+SELECT * FROM "categories" LIMIT 1000;

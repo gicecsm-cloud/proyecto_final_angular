@@ -42,3 +42,10 @@ export interface StudentView {
  *   active: boolean;
  * }
  */
+
+export interface CreateStudentPayload {
+  first_name: string;
+  last_name: string;
+  email: string;
+  active: boolean;
+}

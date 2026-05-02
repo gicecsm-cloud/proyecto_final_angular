@@ -24,16 +24,16 @@ export class InterpolationPage {
    * - Todo debe salir desde propiedades del componente.
    */
   readonly student = signal({
-    firstName: 'Ana',
-    lastName: 'Mora',
-    email: 'ana.mora@example.com',
+    firstName: 'Juan',
+    lastName: 'Perez',
+    email: 'juan.perez@example.com',
     active: true,
   });
 
   readonly product = signal({
-    name: 'Laptop educativa',
-    price: 750,
-    stock: 12,
+    name: 'Computadora Escritorio educativa',
+    price: 820,
+    stock: 10,
     category: 'Tecnologia',
   });
 

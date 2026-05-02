@@ -8,6 +8,8 @@ import {
   Validators,
 } from '@angular/forms';
 import { TaskDraftStorageService } from '../../services/task-draft-storage.service';
+import { CreateTaskPayload } from '../../models/task.model';
+import { AcademicApiService } from '../../services/academic-api.service';
 
 interface TaskForm {
   title: FormControl<string>;
@@ -45,16 +47,23 @@ export class FormsPage {
    * - El payload debe respetar los nombres del backend: student_id y due_date.
    */
   private readonly draftStorage = inject(TaskDraftStorageService);
+  private readonly academicApi = inject(AcademicApiService);
   private readonly draft = this.draftStorage.loadDraft();
 
   readonly taskForm = new FormGroup<TaskForm>({
     title: new FormControl(this.draft.title, {
       nonNullable: true,
-      validators: [Validators.required],
+      validators: [Validators.required, Validators.minLength(3)],
     }),
+
+
+
     description: new FormControl(this.draft.description, {
       nonNullable: true,
     }),
+
+
+
     priority: new FormControl('medium', {
       nonNullable: true,
       validators: [Validators.required],
@@ -105,5 +114,29 @@ export class FormsPage {
      * 5. Manejar next y error en subscribe.
      */
     console.log('Formulario valido:', this.taskForm.getRawValue());
+
+
+  const value = this.taskForm.getRawValue();
+   const payload: CreateTaskPayload = {
+    title: value.title,
+    description: value.description || null,
+    priority: value.priority,
+    status: 'pending',
+    student_id: null,
+    due_date: null,
+  };
+
+  this.academicApi.createTask(payload).subscribe({
+    next: (task) => {
+      console.log('Tarea creada:', task);
+      this.taskForm.reset({ priority: 'medium' });
+      alert(`Tarea "${task.title}" creada correctamente!`);
+    },
+    error: (err) => {
+      console.error('Error al crear tarea:', err);
+      alert('Error al crear la tarea');
+    },
+  });
+
   }
 }

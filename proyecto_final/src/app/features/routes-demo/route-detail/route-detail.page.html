@@ -11,7 +11,17 @@
   La URL /rutas/1 muestra id = 1.
 -->
 <article class="card">
-  <h2>Detalle de ruta</h2>
-  <p>Parametro recibido: {{ routeId() }}</p>
   <a routerLink="/rutas">Volver</a>
+
+  @if (error()) {
+    <p class="error">{{ error() }}</p>
+  } @else if (task()) {
+    <h2>{{ task()!.title }}</h2>
+    <p>Estado: {{ task()!.statusLabel }}</p>
+    <p>Prioridad: {{ task()!.priorityLabel }}</p>
+    <p>Estudiante: {{ task()!.studentLabel }}</p>
+    <p>Fecha: {{ task()!.dueDateLabel }}</p>
+  } @else {
+    <p>Cargando...</p>
+  }
 </article>

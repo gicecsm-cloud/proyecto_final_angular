@@ -1,5 +1,8 @@
-import { Component, signal } from '@angular/core';
+import { Component, signal,computed , inject} from '@angular/core';
 import { TaskView } from '../../models/task.model';
+import { LocalStorageService } from '../../core/storage/local-storage.service';
+
+const TASK_FILTER_KEY = 'academic-task-filter';
 
 type DemoState = 'loading' | 'empty' | 'error' | 'ready';
 
@@ -54,6 +57,25 @@ export class ControlFlowPage {
       dueDateLabel: 'Sin fecha',
     },
   ]);
+
+
+//readonly statusFilter = signal<string>('all');
+
+private readonly storage = inject(LocalStorageService);
+
+readonly statusFilter = signal<string>(
+  this.storage.getItem<{ status: string; priority: string }>(TASK_FILTER_KEY, null as any)?.status ?? 'all'
+);
+
+readonly filteredTasks = computed(() => {
+  if (this.statusFilter() === 'all') return this.tasks();
+  return this.tasks().filter(t => t.status === this.statusFilter());
+});
+
+setFilter(status: string): void {
+  this.statusFilter.set(status);
+}
+
 
   setState(state: DemoState): void {
     this.state.set(state);

@@ -22,4 +22,9 @@ export class HomePage {
     'Formularios reactivos',
     'Local Storage',
   ];
+
+  readonly studentName = 'Gicela del Cisne Soto Marin';
+  readonly course = 'Programación en Angular';
+  readonly mail = 'gicesm@gmail.com';                               
+  readonly parallelo = 'Paralelo B';                    
 }

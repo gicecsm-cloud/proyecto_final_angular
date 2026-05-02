@@ -21,6 +21,7 @@
       <app-student-card
         [student]="student"
         (selected)="onStudentSelected($event)"
+        (removeRequested)="onRemoveRequested($event)"
       />
     }
   </div>

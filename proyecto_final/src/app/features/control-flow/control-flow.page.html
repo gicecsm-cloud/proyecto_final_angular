@@ -32,15 +32,29 @@
   } @else if (state() === 'error') {
     <p class="error">Ocurrio un error simulado.</p>
   } @else {
-    <div class="grid">
-      @for (task of tasks(); track task.id) {
-        <article class="card">
-          <h2>{{ task.title }}</h2>
-          <p>{{ task.summary }}</p>
-          <p>Estado: {{ task.statusLabel }}</p>
-          <p>Prioridad: {{ task.priorityLabel }}</p>
-        </article>
-      }
+    <!-- Botoness-->
+    <div class="actions">
+      <button type="button" (click)="setFilter('all')">Todas</button>
+      <button type="button" (click)="setFilter('done')">Terminadas</button>
+      <button type="button" (click)="setFilter('pending')">Pendientes</button>
+      <button type="button" (click)="setFilter('in_review')">En validacion</button>
+      
     </div>
+
+    <!-- Lista filtrada -->
+    @if (filteredTasks().length === 0) {
+      <p>No hay tareas con ese filtro.</p>
+    } @else {
+      <div class="grid">
+        @for (task of filteredTasks(); track task.id) {
+          <article class="card">
+            <h2>{{ task.title }}</h2>
+            <p>{{ task.summary }}</p>
+            <p>Estado: {{ task.statusLabel }}</p>
+            <p>Prioridad: {{ task.priorityLabel }}</p>
+          </article>
+        }
+      </div>
+    }
   }
 </section>

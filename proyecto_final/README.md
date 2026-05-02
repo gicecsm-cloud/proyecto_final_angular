@@ -1,4 +1,4 @@
-# Proyecto Angular Academico
+# Proyecto Angular Academico g
 
 SPA academica en Angular 20, compatible con el requisito Angular 19 o superior. El proyecto esta preparado para practicar Angular moderno con una base real conectable al backend REST ubicado en `../backend`.
 

@@ -1,5 +1,7 @@
-import { Component, computed, inject } from '@angular/core';
+import { Component, signal, inject } from '@angular/core';
 import { ActivatedRoute, RouterLink } from '@angular/router';
+import { AcademicApiService } from '../../../services/academic-api.service';
+import { TaskView } from '../../../models/task.model';
 
 @Component({
   selector: 'app-route-detail-page',
@@ -28,7 +30,27 @@ export class RouteDetailPage {
    * - Si id no es valido, la pantalla debe mostrar un mensaje.
    * - Si el backend responde 404, se debe mostrar "No encontrado".
    */
+  //readonly routeId = computed(() => this.route.snapshot.paramMap.get('id') ?? 'sin-id');
   private readonly route = inject(ActivatedRoute);
+  private readonly academicApi = inject(AcademicApiService);
 
-  readonly routeId = computed(() => this.route.snapshot.paramMap.get('id') ?? 'sin-id');
+  readonly task = signal<TaskView | null>(null);
+  readonly error = signal<string | null>(null);
+  
+  constructor() {
+    const idParam = this.route.snapshot.paramMap.get('id');
+    const id = Number(idParam);
+
+    if (!idParam || isNaN(id) || id <= 0) {
+      this.error.set('El id no es válido');
+      return;
+    }
+
+    this.academicApi.getTaskById(id).subscribe({
+      next: (task) => this.task.set(task),
+      error: () => this.error.set('Tarea no encontrada'),
+    });
+  }
+
+
 }

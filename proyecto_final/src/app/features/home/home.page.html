@@ -13,14 +13,21 @@
   Una pantalla inicial clara para orientar al usuario.
 -->
 <section class="section">
-  <h1>Proyecto academico Angular</h1>
+  <h1>Proyecto academico Angular </h1>
   <p>
     Esta SPA esta preparada para practicar conceptos modernos de Angular y consumir el backend
     REST generado previamente.
   </p>
+   
+  <article class="card">
+    <h2>Estudiante: {{ studentName }}</h2>
+    <p>Curso: {{ course }}</p>
+    <p>Paralelo: {{ parallelo }}</p>
+    <p>Mail: {{ mail }}</p>
+  </article>              
 
   <h2>Temas del proyecto</h2>
-  <ul>
+  <ul> 
     @for (topic of topics; track topic) {
       <li>{{ topic }}</li>
     }

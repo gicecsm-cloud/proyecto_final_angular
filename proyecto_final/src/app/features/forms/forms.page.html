@@ -35,7 +35,9 @@
       Cuando agregues Validators.minLength(3), muestra aqui un mensaje si el titulo es muy corto.
       Criterio de aceptacion: el mensaje debe aparecer solo si el control fue tocado.
     -->
-
+      @if (taskForm.controls.title.touched && taskForm.controls.title.hasError('minlength')) {
+        <p class="error">El titulo debe contener al menos 3 caracteres.</p>
+      }
     <label>
       Descripcion
       <textarea formControlName="description"></textarea>
@@ -63,6 +65,9 @@
           Mostrar un mensaje de error si esta subtarea esta vacia y ya fue tocada.
           Pista: subtask.touched && subtask.hasError('required')
         -->
+          @if (subtask.touched && subtask.hasError('required')) {
+               <p class="error">La subtarea no puede estar vacía.</p>
+                 }
       }
     </div>
 

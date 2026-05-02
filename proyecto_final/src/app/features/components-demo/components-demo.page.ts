@@ -27,11 +27,12 @@ export class ComponentsDemoPage {
    * - El hijo solo debe emitir eventos.
    * - El padre debe decidir que hacer con la lista.
    */
-  readonly students: StudentView[] = [
+  //readonly 
+  students: StudentView[] = [
     {
       id: 1,
-      fullName: 'Ana Mora',
-      email: 'ana.mora@example.com',
+      fullName: 'Matias Jimenez',
+      email: 'matias.jimenez@example.com',
       active: true,
       activeLabel: 'Activo',
     },
@@ -42,6 +43,14 @@ export class ComponentsDemoPage {
       active: true,
       activeLabel: 'Activo',
     },
+
+    {
+      id: 3,
+      fullName: 'Santiago Lopez',
+      email: 'santiago.lopez@example.com',
+      active: false,
+      activeLabel: 'Inactivo',
+    },
   ];
 
   selectedStudent: StudentView | null = null;
@@ -49,4 +58,17 @@ export class ComponentsDemoPage {
   onStudentSelected(student: StudentView): void {
     this.selectedStudent = student;
   }
+
+
+  onRemoveRequested(student: StudentView): void {
+  if (student.active) {
+    alert('No se puede eliminar un estudiante activo');
+    return;
+  }
+
+  if (this.selectedStudent?.id === student.id) {
+    this.selectedStudent = null;
+  }
+  this.students = this.students.filter(s => s.id !== student.id);
+}
 }

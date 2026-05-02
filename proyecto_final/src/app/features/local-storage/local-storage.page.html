@@ -36,4 +36,9 @@
   } @else {
     <p>No hay nombre guardado todavia.</p>
   }
+  @if (taskFilter()) {
+  <p>Filtro guardado: estado = {{ taskFilter()!.status }} | prioridad = {{ taskFilter()!.priority }}</p>
+} @else {
+  <p>No hay filtro guardado</p>
+}
 </section>

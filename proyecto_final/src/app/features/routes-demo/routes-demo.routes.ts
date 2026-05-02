@@ -29,11 +29,21 @@ export const routesDemoRoutes: Routes = [
         loadComponent: () =>
           import('./route-list/route-list.page').then((m) => m.RouteListPage),
       },
+      
+      {
+          path: 'crear',
+          loadComponent: () =>
+            import('./route-crear/route-crear.page').then((m) => m.RouteCrearPage),
+      },
+
+
       {
         path: ':id',
         loadComponent: () =>
           import('./route-detail/route-detail.page').then((m) => m.RouteDetailPage),
       },
+        
+
     ],
   },
 ];

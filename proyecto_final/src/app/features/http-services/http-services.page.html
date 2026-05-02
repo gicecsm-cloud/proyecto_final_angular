@@ -59,7 +59,7 @@
   @if (tasks$ | async; as tasks) {
     <ul>
       @for (task of tasks; track task.id) {
-        <li>{{ task.title }} - {{ task.statusLabel }} - {{ task.studentLabel }}</li>
+        <li>{{ task.title }} - {{ task.statusLabel }} - {{ task.studentLabel }} - {{ task.dueDateLabel }}</li>
         <!--
           TODO estudiante:
           Agrega task.dueDateLabel cuando completes el mapper de fecha.
@@ -67,4 +67,41 @@
       }
     </ul>
   }
+  <h2>Crear estudiante</h2>
+   <form class="form" [formGroup]="studentForm" (ngSubmit)="createStudent()">
+  
+  <label>
+    Nombre
+    <input type="text" formControlName="first_name">
+    @if (studentForm.controls.first_name.touched && studentForm.controls.first_name.hasError('required')) {
+      <p class="error">El nombre es obligatorio</p>
+    }
+  </label>
+
+  <label>
+    Apellido
+    <input type="text" formControlName="last_name">
+    @if (studentForm.controls.last_name.touched && studentForm.controls.last_name.hasError('required')) {
+      <p class="error">El apellido es obligatorio</p>
+    }
+  </label>
+
+  <label>
+    Email
+    <input type="email" formControlName="email">
+    @if (studentForm.controls.email.touched && studentForm.controls.email.hasError('required')) {
+      <p class="error">El email es obligatorio</p>
+    }
+    @if (studentForm.controls.email.touched && studentForm.controls.email.hasError('email')) {
+      <p class="error">Ingresa un email válido</p>
+    }
+  </label>
+
+  <label>
+    <input type="checkbox" formControlName="active"> Activo
+  </label>
+
+  <button type="submit">Crear estudiante</button>
+
+</form>
 </section>

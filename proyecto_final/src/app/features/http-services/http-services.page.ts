@@ -1,14 +1,17 @@
-import { AsyncPipe, JsonPipe } from '@angular/common';
+import { AsyncPipe, JsonPipe} from '@angular/common';
 import { Component, inject } from '@angular/core';
+import { FormControl, FormGroup, ReactiveFormsModule, Validators } from '@angular/forms';
 import { Observable } from 'rxjs';
 import { AcademicApiService } from '../../services/academic-api.service';
 import { CategoryView } from '../../models/category.model';
 import { ProductView } from '../../models/product.model';
 import { TaskView } from '../../models/task.model';
+import { StudentView } from '../../models/student.model';
+import { CreateStudentPayload } from '../../models/student.model';
 
 @Component({
   selector: 'app-http-services-page',
-  imports: [AsyncPipe, JsonPipe],
+  imports: [AsyncPipe, JsonPipe, ReactiveFormsModule],
   templateUrl: './http-services.page.html',
 })
 export class HttpServicesPage {
@@ -45,4 +48,40 @@ export class HttpServicesPage {
     method: 'GET',
     topic: 'json',
   };
+
+  readonly studentForm = new FormGroup({
+    first_name: new FormControl('', [Validators.required]),
+    last_name: new FormControl('', [Validators.required]),
+    email: new FormControl('', [Validators.required, Validators.email]),
+    active: new FormControl(true, { nonNullable: true }),
+  });
+
+  createdStudent: StudentView | null = null;
+
+  createStudent(): void {
+    if (this.studentForm.invalid) {
+      this.studentForm.markAllAsTouched();
+      return;
+    }
+
+    const payload: CreateStudentPayload = {
+      first_name: this.studentForm.value.first_name!,
+      last_name: this.studentForm.value.last_name!,
+      email: this.studentForm.value.email!,
+      active: this.studentForm.value.active ?? true,
+    };
+
+    this.academicApi.createStudent(payload).subscribe({
+      next: (student) => {
+        this.createdStudent = student;
+        this.studentForm.reset({ active: true });
+        alert(`Estudiante "${student.fullName}" creado correctamente!`);
+      },
+      error: (err) => {
+        console.error('Error:', err);
+        alert('Err al crear el estudiante');
+      },
+    });
+  }
 }
+
