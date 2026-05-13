@@ -1,6 +1,6 @@
 import { HttpClient } from '@angular/common/http';
 import { inject, Injectable } from '@angular/core';
-import { map, Observable, tap, throwError } from 'rxjs';
+import { map, Observable, tap, throwError, catchError } from 'rxjs';
 import { API_BASE_URL } from '../core/constants/api.constants';
 import {
   mapCategoryApiToView,
@@ -93,7 +93,7 @@ export class AcademicApiService {
       /*
        * TODO estudiante:
        * El mapper de tasks deja dueDateLabel parcialmente resuelto.
-       * Completa esa transformacion antes de usar la fecha en una pantalla real.
+       * Completa esa transformacion antes de usar la fecha en  una pantalla real.
        */
       map((response) => response.data.map(mapTaskApiToView)),
     );
@@ -129,8 +129,16 @@ export class AcademicApiService {
     return this.http.post<ApiResponse<TaskApi>>(`${API_BASE_URL}/tasks`, payload).pipe(
     tap((response) => console.log('Tarea creada:', response)),
     map((response) => mapTaskApiToView(response.data)),
-  );
-  }
+    
+    catchError((error) => {
+        console.error('Error creando tarea:', error);
+
+        return throwError(() =>
+          new Error('No se pudo crear la tarea')
+        );
+      })
+    );
+}
 
   /*
    * TODO estudiante:
@@ -153,13 +161,28 @@ export class AcademicApiService {
   return this.http.post<ApiResponse<StudentApi>>(`${API_BASE_URL}/students`, payload).pipe(
     tap((response) => console.log('Estudiante Creado :', response)),
     map((response) => mapStudentApiToView(response.data)),
-  );
+    catchError((error) => {
+        console.error('Error creando estudiante:', error);
+
+        return throwError(() =>
+          new Error('No se pudo crear el estudiante')
+        );
+      })
+    );
 }
 getTaskById(id: number): Observable<TaskView> {
   return this.http.get<ApiResponse<TaskApi>>(`${API_BASE_URL}/tasks/${id}`).pipe(
     tap((response) => console.log('Tarea por identificador:', response)),
     map((response) => mapTaskApiToView(response.data)),
-  );
+
+      catchError((error) => {
+        console.error('Error obteniendo tarea:', error);
+
+        return throwError(() =>
+          new Error('No se encontró la tarea')
+        );
+      })
+    );
 }
 }
   
