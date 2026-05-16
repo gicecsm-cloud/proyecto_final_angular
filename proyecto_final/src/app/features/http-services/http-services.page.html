@@ -18,6 +18,11 @@
 -->
 <section class="section">
   <h1>Servicios HTTP</h1>
+@if (errorMessage()) {
+  <article class="card" style="border-left: 4px solid rgb(244, 16, 16);">
+    <p>{{ errorMessage() }}</p>
+  </article>
+}
 
   <article class="card">
     <h2>JSON de ejemplo</h2>

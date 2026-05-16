@@ -1,7 +1,7 @@
 import { AsyncPipe, JsonPipe} from '@angular/common';
-import { Component, inject } from '@angular/core';
+import { Component, inject, signal} from '@angular/core';
 import { FormControl, FormGroup, ReactiveFormsModule, Validators } from '@angular/forms';
-import { Observable } from 'rxjs';
+import { Observable, of,catchError } from 'rxjs';
 import { AcademicApiService } from '../../services/academic-api.service';
 import { CategoryView } from '../../models/category.model';
 import { ProductView } from '../../models/product.model';
@@ -38,11 +38,26 @@ export class HttpServicesPage {
    * - Mostrar al usuario si el backend no esta disponible.
    */
   private readonly academicApi = inject(AcademicApiService);
-
-  readonly categories$: Observable<CategoryView[]> = this.academicApi.getCategories();
-  readonly products$: Observable<ProductView[]> = this.academicApi.getProducts();
-  readonly tasks$: Observable<TaskView[]> = this.academicApi.getTasks();
-
+  
+readonly categories$: Observable<CategoryView[]> = this.academicApi.getCategories().pipe(
+  catchError(() => {
+    this.errorMessage.set('No se pudo conectar al backend. Verifica que el servidor esté activo.');
+    return of([]);
+  })
+);
+  readonly products$: Observable<ProductView[]> = this.academicApi.getProducts().pipe(
+    catchError(() => {
+      this.errorMessage.set('No se pudo conectar al backend. Verifica que el servidor esté activo.');
+      return of([]);
+    })
+  )
+  readonly tasks$: Observable<TaskView[]> = this.academicApi.getTasks().pipe(
+    catchError(() => {
+      this.errorMessage.set('No se pudo conectar al backend. Verifica que el servidor esté activo.');
+      return of([]);
+    })
+  )
+  readonly errorMessage = signal<string | null>(null);
   readonly exampleJson = {
     endpoint: '/api/tasks',
     method: 'GET',
